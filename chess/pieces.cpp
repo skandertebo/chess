@@ -2,6 +2,7 @@
 namespace piece {
 bool rook :: valid_move(int newline , int newcolumn , piece***board){
 	int i;
+	piece* alt;
 	if ((newline > 7) || (newcolumn) > 7) return false;
 	if ((line != newline) && (column != newcolumn)) return false;
 	if ((line == newline) && (column == column)) return false;
@@ -10,11 +11,21 @@ bool rook :: valid_move(int newline , int newcolumn , piece***board){
 		for (i = line + 1; i < newline; i++) {
 			if (board[i][column] != nullptr) return false;
 		}
-		
-
-
+	}
+	else if (newline < line) {
+		for (i = line - 1; i > newline; i--) {
+			if (board[i][column] != nullptr) return false;
+		}
+	}
+	else if (newcolumn < column) {
+		for (i = line - 1; i > newline; i--) {
+			if (board[line][i] != nullptr) return false;
+		}
 
 	}
+
+
+	
 }
 bool pawn :: valid_move(int newline , int newcolumn , piece***board){
 	return 0;
