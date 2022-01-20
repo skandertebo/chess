@@ -2,6 +2,7 @@
 namespace piece {
 bool rook :: valid_move(int newline , int newcolumn , piece***board){
 	int i;
+	piece* temp = this ;
 	piece* alt;
 	if ((newline > 7) || (newcolumn) > 7) return false;
 	if ((line != newline) && (column != newcolumn)) return false;
@@ -18,12 +19,19 @@ bool rook :: valid_move(int newline , int newcolumn , piece***board){
 		}
 	}
 	else if (newcolumn < column) {
-		for (i = line - 1; i > newline; i--) {
+		for (i = column - 1; i > newcolumn; i--) {
+			if (board[line][i] != nullptr) return false;
+		}
+	}
+
+	else if (newcolumn > column) {
+		for (i = column + 1; i < newcolumn; i++) {
 			if (board[line][i] != nullptr) return false;
 		}
 
 	}
 
+	
 
 	
 }
@@ -43,38 +51,38 @@ bool knight :: valid_move(int newline , int newcolumn , piece***board){
 	return 0;
 }
 
-void promote(piece* pwn , char prom){
-	if(pwn->prom == 'p'){
-	switch (prom) {
-	case 'r':
-	{rook extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus()); 
-	delete pwn;
-	*pwn = rook(extra);
-	};
-	break;
+void promote(piece* pwn, char prom) {
+	if (pwn->prom == 'p') {
+		switch (prom) {
+		case 'r':
+		{rook extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus());
+		delete pwn;
+		*pwn = rook(extra);
+		};
+		break;
 
-	case 'k':
-	{knight extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus()); 
-	delete pwn;
-	*pwn = knight(extra);
-	};
-	break;
+		case 'k':
+		{knight extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus());
+		delete pwn;
+		*pwn = knight(extra);
+		};
+		break;
 
-	case 'q':
-	{queen extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus()); 
-	delete pwn;
-	*pwn = queen(extra);
-	};
-	break;
+		case 'q':
+		{queen extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus());
+		delete pwn;
+		*pwn = queen(extra);
+		};
+		break;
 
-	case 'b':
-	{bishop extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus());
-	delete pwn;
-	*pwn = bishop(extra);
-	};
-	break;
+		case 'b':
+		{bishop extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus());
+		delete pwn;
+		*pwn = bishop(extra);
+		};
+		break;
+		}
 	}
-    }
-	
+}
 
  };
