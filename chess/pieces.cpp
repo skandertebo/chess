@@ -20,17 +20,36 @@ bool knight :: valid_move(int newline , char newcolumn , piece***board){
 }
 
 void promote(piece* pwn , char prom){
-switch(prom){
-case 'r' :
-rook rkextra(pwn->getcolor() , pwn->getline(),  pwn->getcolumn() , pwn->getstatus()); 
-delete pwn ;
-*pwn = rook(rkextra);
+	switch (prom) {
+	case 'r':
+	{rook extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus()); 
+	delete pwn;
+	*pwn = rook(extra);
+	};
+	break;
+
+	case 'k':
+	{knight extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus()); 
+	delete pwn;
+	*pwn = knight(extra);
+	};
+	break;
+
+	case 'q':
+	{queen extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus()); 
+	delete pwn;
+	*pwn = queen(extra);
+	};
+	break;
+
+	case 'b':
+	{bishop extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus());
+	delete pwn;
+	*pwn = bishop(extra);
+	};
+	break;
+	}
+ }
 
 
-}
-
-
-}
-
-
-};
+ };

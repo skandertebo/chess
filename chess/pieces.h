@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 // to implement letters in column index
 const int a = 0 ;
 const int b = 1 ;
@@ -31,7 +32,7 @@ virtual bool valid_move(int newline , char newcolumn , piece*** board)=0;
 void move(piece& p , int newline , int newcolumn);
 piece(int color , int line , char column , bool status):color(color) , status(status) , line(line) , column(column) {};
 ~piece(){}
-piece(const piece& pce) : color(pce.color) , line(pce.line) , column(pce.column) , status(pce.status) {} ;
+piece(const piece& pce) : color(pce.color) , line(pce.line) , column(pce.column) , status(pce.status) {};
 void move(int line , int column , piece***board);
 void kill(bool status , int line , int column);
 bool getstatus(){return status;}
@@ -50,7 +51,7 @@ class pawn : public piece{
 public:
 bool valid_move(int newline , char newcolumn , piece*** board);
 //implementing upgrade to queen should be member or friend function ?
-pawn(int color , int line , char column , bool status) : piece(color , line , column , status){};
+pawn(int color, int line, char column, bool status) : piece(color, line, column, status) {};
 pawn(const pawn& pwn) : piece(pwn){};
 };
 
@@ -67,6 +68,7 @@ public:
 bool valid_move(int newline , char newcolumn , piece*** board);
 queen(int color , int line , char column , bool status) : piece(color , line , column , status){};
 static const char prom = 'q' ;
+queen(const queen& q) : piece(q) {};
 };
 
 class knight : public piece{
@@ -74,6 +76,7 @@ public:
 bool valid_move(int newline , char newcolumn , piece*** board);
 knight(int color , int line , char column , bool status) : piece(color , line , column , status){};
 static const char prom = 'k' ;
+knight(const knight& k) : piece(k) {};
 };
 
 class bishop : public piece{
@@ -81,6 +84,7 @@ public:
 bool valid_move(int newline , char newcolumn , piece*** board);
 bishop(int color , int line , char column , bool status) : piece(color , line , column , status){};
 static const char prom = 'b' ;
+bishop(const rook& bi) : piece(bi) {};
 };
 
 class king : public piece{
@@ -90,7 +94,7 @@ king(int color , int line , char column , bool status) : piece(color , line , co
 bool in_check();
 bool in_check_mate();
 };
-void promote(pawn* pwn , char prom );
+void promote(piece* pwn , char prom );
 
 
 
