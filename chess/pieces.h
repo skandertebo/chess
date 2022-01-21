@@ -37,7 +37,7 @@ piece(int color , int line , int column , bool status , int move_count ):color(c
 ~piece(){}
 piece(const piece& pce) : color(pce.color) , line(pce.line) , column(pce.column) , status(pce.status) , prom(pce.prom) , move_count(pce.move_count) {};
 void move(int newline , int newcolumn , piece***board);
-void kill();
+void kill(piece*** board);
 bool getstatus(){return status;}
 int  getcolor(){return color;}
 int getline(){return line;}
@@ -48,8 +48,7 @@ void setline(int line){this->line = line;}
 void setcolumn(int column){this->column = column;}
 void setstatus(bool status){this->status = status;}
 bool check_validity(int newline, int newcolumn, piece*** board, piece** teams);
-//implement discovery check move validity method
-//idea is to make the move and check move validity on all enemy pieces
+
 
 };
 
@@ -93,12 +92,14 @@ bishop(const rook& bi) : piece(bi) {};
 class king : public piece{
 public:
 bool valid_move(int newline , int newcolumn , piece*** board);
-king(int color , int line , int column , bool status, int move_count) : piece(color , line , column , status, move_count){};
-bool in_check(const king& kng);
-bool in_check_mate();
-};
-void promote(piece* pwn , char prom );
+king(int color, int line, int column, bool status, int move_count) : piece(color, line, column, status, move_count) { prom = 'k'; };
 
+};
+
+void promote(piece* pwn , char prom );
+bool in_check(king& kng , piece* team , piece *** board);
+bool in_check_mate(king& kng , piece** teams , piece *** board);
+bool in_stale_mate(king& kng, piece** teams, piece*** board);
 
 
 };

@@ -207,9 +207,22 @@ bool knight :: valid_move(int newline , int newcolumn , piece***board){
 	move_count++;
 	for (i = 0; i < 16; i++) {
 		if (teams[team][i].getstatus() == alive) {
-			if (teams[team][i].valid_move(teams[color][0].getline(), teams[color][0].getcolumn(), board) == 1)return false;
+			if (teams[team][i].valid_move(teams[color][0].getline(), teams[color][0].getcolumn(), board) == 1) {
+				board[oldline][oldcolumn] = board[line][column];
+				board[line][column] = nullptr;
+				column = oldcolumn;
+				line = oldline;
+				move_count--;
+				return false;
+			}
 	  }
 	}
+		board[oldline][oldcolumn] = board[line][column];
+		board[line][column] = nullptr;
+		column = oldcolumn;
+		line = oldline;
+		move_count--;
+
 
 	return true;
 }
@@ -254,7 +267,64 @@ void promote(piece* pwn, char prom) {
 			}
 		}
 	}
- 
+void piece ::  kill(piece*** board) {
+	status = dead;
+	line = -1;
+	column = 10;
+ }
+void piece :: move(int newline, int newcolumn, piece*** board) {
+	if (board[newline][newcolumn] != nullptr) {
+		board[newline][newcolumn]->kill(board);
+	}
+	board[newline][newcolumn] = board[line][column];
+	board[line][column] = nullptr;
+	line = newline;
+	column = newcolumn;
+	if (prom == 'k') {
+		if (newcolumn == column + 2) {
+			board[line][column + 1] = board[line][column + 3];
+			board[line][column + 3] = nullptr;
+		}
+		else if(newcolumn==column-2) {
+			board[line][column -1] = board[line][column -4];
+			board[line][column -4] = nullptr;
+		}
+	}
+}
+bool in_check_mate(king& kng, piece** teams, piece*** board) {
+	int opteam = (kng.getcolor() + 1) % 2;
+	int i, j, k;
+	if (in_check(kng, teams[opteam], board) == false)return false;
+	for (i = 0; i < 16; i++) {
+		if (teams[kng.getcolor()][i].getstatus() == dead)continue;
+		for (j = 0; j < 8; j++) {
+			for (k = 0; k < 8; k++) {
+				
+				if ((teams[kng.getcolor()][i].valid_move(j, k, board) == 1) && (teams[kng.getcolor()][i].check_validity(j, k, board, teams) == 1))
+					return false;
 
+			}
+		}
 
+	}
+	return true;
+}
+bool in_stale_mate(king& kng, piece** teams, piece*** board) {
+	int opteam = (kng.getcolor() + 1) % 2;
+	int i, j, k;
+	if (in_check(kng, teams[opteam], board) == true)return false;
+	for (i = 0; i < 16; i++) {
+		if (teams[kng.getcolor()][i].getstatus() == dead)continue;
+		for (j = 0; j < 8; j++) {
+			for (k = 0; k < 8; k++) {
+
+				if ((teams[kng.getcolor()][i].valid_move(j, k, board) == 1) && (teams[kng.getcolor()][i].check_validity(j, k, board, teams) == 1))
+					return false;
+
+			}
+		}
+
+	}
+	return true;
+}
  };
