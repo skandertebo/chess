@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#define COMMON_CHECK if ((newline > 7) || (newcolumn > 7)) return false; if ((board[newline][newcolumn] != nullptr) && (board[newline][newcolumn]->getcolor() == color))return false;
 // to implement letters in column index
 const int a = 0 ;
 const int b = 1 ;
