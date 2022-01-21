@@ -15,7 +15,7 @@ const int alive = 0 ;
 const int dead = 1 ;
 const int white = 0 ;
 const int black = 1 ;
-
+// NB : in an array of pieces that represents a team : the king should be set to the index of 0  
 namespace piece {
 
 class piece {
@@ -47,6 +47,7 @@ void setcolor(int color){this->color = color;}
 void setline(int line){this->line = line;}
 void setcolumn(int column){this->column = column;}
 void setstatus(bool status){this->status = status;}
+bool check_validity(int newline, int newcolumn, piece*** board, piece** teams);
 //implement discovery check move validity method
 //idea is to make the move and check move validity on all enemy pieces
 

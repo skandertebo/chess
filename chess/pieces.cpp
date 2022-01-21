@@ -154,6 +154,7 @@ bool queen :: valid_move(int newline , int newcolumn , piece***board){
 	return true;
 }
 bool king :: valid_move(int newline , int newcolumn , piece***board){
+
 	COMMON_CHECK
 	if ((newline == line) && (newcolumn == column)) return false;
 	if (newcolumn == column + 2) {
@@ -192,8 +193,33 @@ bool knight :: valid_move(int newline , int newcolumn , piece***board){
 		    if ((newcolumn == column + 1) || (newcolumn == column - 1))return true;
 	    }
 		return false;
+}bool piece::check_validity(int newline, int newcolumn, piece*** board , piece**teams) {
+	piece* alt = board[newline][newcolumn];
+	if (board[newline][newcolumn] != nullptr)board[newline][newcolumn]->setstatus(dead);
+	int oldline = line;
+	int oldcolumn = column;
+	int team = (color + 1) % 2;
+	int i;
+	board[newline][newcolumn] = board[line][column];
+	board[line][column] = nullptr;
+	column = newcolumn;
+	line = newline;
+	move_count++;
+	for (i = 0; i < 16; i++) {
+		if (teams[team][i].getstatus() == alive) {
+			if (teams[team][i].valid_move(teams[color][0].getline(), teams[color][0].getcolumn(), board) == 1)return false;
+	  }
+	}
+
+	return true;
 }
-bool in_check(const king& kng) { }
+bool in_check(king& kng , piece* team , piece*** board) { 
+	int i;
+	for (i = 0; i < 16; i++) {
+		if( (team[i].valid_move(kng.getline(), kng.getcolumn(), board) == true) && (team[i].getstatus()==alive))return true;
+	}
+	return false;
+}
 void promote(piece* pwn, char prom) {
 	
 		if (pwn->getprom() == 'p') {
@@ -229,4 +255,6 @@ void promote(piece* pwn, char prom) {
 		}
 	}
  
+
+
  };
