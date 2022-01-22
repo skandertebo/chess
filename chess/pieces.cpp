@@ -224,7 +224,7 @@ bool knight :: valid_move(int newline , int newcolumn , piece***board){
 		    if ((newcolumn == column + 1) || (newcolumn == column - 1))return true;
 	    }
 		return false;
-}bool piece::check_validity(int newline, int newcolumn, piece*** board , piece***teams) {
+}bool piece::check_validity(int newline, int newcolumn, piece***& board , piece***teams) {
 	if (valid_move(newline, newcolumn, board) == 0)return false;
 	
 	if (board[newline][newcolumn] != nullptr)board[newline][newcolumn]->setstatus(dead);
@@ -305,7 +305,7 @@ void piece ::  kill(piece*** board) {
 	line = -1;
 	column = 10;
  }
-void piece :: move(int newline, int newcolumn, piece*** board) {
+void piece :: move(int newline, int newcolumn, piece***& board) {
 	if (board[newline][newcolumn] != nullptr) {
 		board[newline][newcolumn]->kill(board);
 	}

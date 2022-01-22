@@ -37,7 +37,7 @@ virtual bool valid_move(int newline, int newcolumn, piece*** board) = 0;
 piece(int color, int line, int column, bool status, int move_count , int indice , char prom) :color(color), status(status), line(line), column(column), move_count(move_count) , indice(indice) , prom(prom) {  }
 ~piece(){}
 piece(piece& pce) : color(pce.getcolor()) , line(pce.getline()) , column(pce.getcolumn()) , status(pce.getstatus()) , prom(pce.getprom()) , move_count(pce.getmove_count()) ,indice(pce.getindice()) {}
-void move(int newline , int newcolumn , piece***board);
+void move(int newline , int newcolumn , piece***&board);
 void kill(piece*** board);
 bool getstatus(){return status;}
 int  getcolor(){return color;}
@@ -49,7 +49,7 @@ void setcolor(int color){this->color = color;}
 void setline(int line){this->line = line;}
 void setcolumn(int column){this->column = column;}
 void setstatus(bool status){this->status = status;}
-bool check_validity(int newline, int newcolumn, piece*** board, piece*** teams);
+bool check_validity(int newline, int newcolumn, piece***& board, piece*** teams);
 piece():color(-1),line(0),column(0),status(0),prom('a'),move_count(0) {}
 
 };
