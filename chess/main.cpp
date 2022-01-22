@@ -3,6 +3,7 @@
 #include "pieces.h"
 
 int main(){
+    bool test=false;
     int role = white;
     int i=0, j;
     int line, column , newline , newcolumn;
@@ -11,8 +12,8 @@ int main(){
     *(teams + 1) = new piece::piece*[16];
     piece::piece*** board = new piece::piece * *[8];
     for (j = 0; j < 8; j++)*(board + j) = new piece::piece * [8];
-        for (i = 0; i < 7; i++) {
-            for (j = 0; j < 7; j++)board[i][j] = nullptr;
+        for (i = 0; i < 8; i++) {
+            for (j = 0; j < 8; j++)board[i][j] = nullptr;
     }
         i = 0;
     for (i = 8; i < 16; i++) {
@@ -47,24 +48,25 @@ int main(){
         board[teams[black][j]->getline()][teams[black][j]->getcolumn()] = teams[black][j];
     }
 
-// while ((piece::in_check_mate(teams[role][0], teams, board) == false) && (piece::in_stale_mate(teams[role][0], teams, board) == false)){
-    while(1){
+    while ((piece::in_check_mate(teams[role][0], teams, board) == false) && (piece::in_stale_mate(teams[role][0], teams, board) == false)){
+    
         do {
             std::cout << "choose line" << std::endl;
             std::cout << "choose column" << std::endl;
             std::cin >> line;
             std::cin >> column;
-        } while ((line>7)||(column>7)||(board[line][column] == nullptr) || (board[line][column]->getcolor() != role));
+        } while ((line > 7) || (column > 7) || (board[line][column] == nullptr) || (board[line][column]->getcolor() != role));
 
         do {
             std::cout << "choose new line" << std::endl;
             std::cout << "choose new column" << std::endl;
             std::cin >> newline;
             std::cin >> newcolumn;
-            
-        } while ((board[line][column]->valid_move(newline, newcolumn, board) == 0) || ((board[line][column]->check_validity(newline, newcolumn, board , teams) == 0)));
+
+        } while ((board[line][column]->valid_move(newline, newcolumn, board) == 0) || ((board[line][column]->check_validity(newline, newcolumn, board, teams) == 0)));
         board[line][column]->move(newline, newcolumn, board);
         role = (role + 1) % 2;
-        std::cout << in_check_mate(teams[white][0], teams, board) << std::endl;
+        std::cout << ( (role == 0) ? "white turn" : "black turn" ) << std::endl;
+        std::cout << piece::in_check_mate(teams[role][0], teams, board) << std::endl;
     }
 }

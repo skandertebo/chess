@@ -325,39 +325,44 @@ void piece :: move(int newline, int newcolumn, piece*** board) {
 	}
 }
 bool in_check_mate(piece* kng, piece*** teams, piece*** board) {
-	//int opteam = (kng->getcolor() + 1) % 2;
+	int opteam = (kng->getcolor() + 1) % 2;
 	int i, j, k;
-	//if (in_check(kng, teams[opteam], board) == false)return false;
+	if (in_check(kng, teams[opteam], board) == false)return false;
 	for (i = 0; i < 16; i++) {
 		if (teams[kng->getcolor()][i]->getstatus() == dead)continue;
 		for (j = 0; j < 8; j++) {
 			for (k = 0; k < 8; k++) {
 				
 				if ((teams[kng->getcolor()][i]->valid_move(j, k, board) == 1) && (teams[kng->getcolor()][i]->check_validity(j, k, board, teams) == 1))
+				{
+					
 					return false;
+				}
 
 			}
 		}
 
 	}
+	std::cout << "checkmate!" << std::endl;
 	return true;
 }
 bool in_stale_mate(piece* kng, piece*** teams, piece*** board) {
-	//int opteam = (kng->getcolor() + 1) % 2;
+	int opteam = (kng->getcolor() + 1) % 2;
 	int i, j, k;
-	//if (in_check(kng, teams[opteam], board) == true)return false;
+	if (in_check(kng, teams[opteam], board) == true)return false;
 	for (i = 0; i < 16; i++) {
 		if (teams[kng->getcolor()][i]->getstatus() == dead)continue;
 		for (j = 0; j < 8; j++) {
 			for (k = 0; k < 8; k++) {
 
-				if ((teams[kng->getcolor()][i]->valid_move(j, k, board) == 1) /* && (teams[kng->getcolor()][i]->check_validity(j, k, board, teams) == 1)*/)
+				if ((teams[kng->getcolor()][i]->valid_move(j, k, board) == 1)  && (teams[kng->getcolor()][i]->check_validity(j, k, board, teams) == 1))
 					return false;
 
 			}
 		}
 		
 	}
+	std::cout << "stalemate!" << std::endl;
 	return true;
 }
  };
