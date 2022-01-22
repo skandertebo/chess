@@ -313,7 +313,7 @@ void piece :: move(int newline, int newcolumn, piece***& board) {
 	board[line][column] = nullptr;
 	line = newline;
 	column = newcolumn;
-	if (prom == 'k') {
+	if (prom == 'u') {
 		if (newcolumn == column + 2) {
 			board[line][column + 1] = board[line][column + 3];
 			board[line][column + 3] = nullptr;

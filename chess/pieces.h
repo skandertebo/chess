@@ -94,7 +94,7 @@ bishop(rook& bi) : piece(bi) {};
 class king : public piece{
 public:
 bool valid_move(int newline , int newcolumn , piece*** board);
-king(int color, int line, int column, bool status, int move_count, int indice, int prom) : piece(color, line, column, status, move_count, indice, prom) { prom = 'k'; };
+king(int color, int line, int column, bool status, int move_count, int indice, int prom) : piece(color, line, column, status, move_count, indice, prom) { prom = 'u'; };
 
 };
 
