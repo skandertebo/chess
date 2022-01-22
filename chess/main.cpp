@@ -67,6 +67,10 @@ int main(){
         board[line][column]->move(newline, newcolumn, board);
         role = (role + 1) % 2;
         std::cout << ( (role == 0) ? "white turn" : "black turn" ) << std::endl;
-        std::cout << piece::in_check_mate(teams[role][0], teams, board) << std::endl;
+        for (i = 0; i < 16; i++) {
+
+            std::cout << "WHITE : index: " << teams[0][i]->getindice() << " line: " << teams[0][i]->getline() << " column: " << teams[0][i]->getcolumn() << " status " << teams[0][i]->getstatus()
+                << "|| BLACK : index: " << teams[1][i]->getindice() << " line: " << teams[1][i]->getline() << " column: " << teams[1][i]->getcolumn() << " status " << teams[1][i]->getstatus() << std::endl;
+        }
     }
 }
