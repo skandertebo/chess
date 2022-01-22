@@ -3,10 +3,9 @@ namespace piece {
 	
 bool rook :: valid_move(int newline , int newcolumn , piece***board){
 	int i;
-	piece* temp = this ;
 	if ((newline > 7) || (newcolumn) > 7) return false;
 	if ((line != newline) && (column != newcolumn)) return false;
-	if ((line == newline) && (column == column)) return false;
+	if ((line == newline) && (column == newcolumn)) return false;
 	if ((board[newline][newcolumn] != nullptr) && (board[newline][newcolumn]->getcolor() == color))return false;
 	if (newline > line) {
 		for (i = line + 1; i < newline; i++) {
@@ -17,40 +16,72 @@ bool rook :: valid_move(int newline , int newcolumn , piece***board){
 		for (i = line - 1; i > newline; i--) {
 			if (board[i][column] != nullptr) return false;
 		}
+		return true;
 	}
-	else if (newcolumn < column) {
-		for (i = column - 1; i > newcolumn; i--) {
-			if (board[line][i] != nullptr) return false;
-		}
-	}
-
-	else if (newcolumn > column) {
-		for (i = column + 1; i < newcolumn; i++) {
-			if (board[line][i] != nullptr) return false;
+	else {
+		if (newcolumn < column) {
+			for (i = column - 1; i > newcolumn; i--) {
+				if (board[line][i] != nullptr) return false;
+			}
 		}
 
+		else  {
+			for (i = column + 1; i < newcolumn; i++) {
+				if (board[line][i] != nullptr) return false;
+			}
+
+		}
+		return true;
 	}
-	
 	return true;
 }
 bool pawn :: valid_move(int newline , int newcolumn , piece***board){
 	if ((newline > 7) || (newcolumn) > 7) return false;
-	if (newline <= line) return false;
-	if ((newline > line + 2)||(newcolumn > column + 1)||(newcolumn < column - 1)) return false;
-	if ((board[newline][newcolumn] != nullptr) && (board[newline][newcolumn]->getcolor() == color))return false;
-	if (newline == line + 1) {
-	if (((newcolumn == column - 1) || (newcolumn == column + 1)) && (board[newline][newcolumn] == nullptr)) return false;
-	if ((newcolumn == column) && (board[newline][newcolumn] != nullptr))return false;
-	return true;
-	}
-	else {
-		    if (move_count != 0)return false;
+	if (color == white) {
+		if (newline <= line) return false;
+		if ((newline > line + 2) || (newcolumn > column + 1) || (newcolumn < column - 1)) return false;
+		if (board[newline][newcolumn] != nullptr) {
+			if (board[newline][newcolumn]->getcolor() == color)return false;
+		}
+
+		if (newline == line + 1) {
+			if (((newcolumn == column - 1) || (newcolumn == column + 1)) && (board[newline][newcolumn] == nullptr)) return false;
+			if ((newcolumn == column) && (board[newline][newcolumn] != nullptr))return false;
+			return true;
+		}
+		else {
+			if (move_count != 0)return false;
 			if (newcolumn != column)return false;
 			if (board[line + 1][column] != nullptr)return false;
 			if (board[newline][newcolumn] != nullptr) return false;
 
 			return true;
+		}
 	}
+	else {
+		if (newline >= line) return false;
+		if ((newline < line - 2) || (newcolumn > column + 1) || (newcolumn < column - 1)) return false;
+		if (board[newline][newcolumn] != nullptr) {
+			if (board[newline][newcolumn]->getcolor() == color)return false;
+		}
+
+		if (newline == line - 1) {
+			if (((newcolumn == column - 1) || (newcolumn == column + 1)) && (board[newline][newcolumn] == nullptr)) return false;
+			if ((newcolumn == column) && (board[newline][newcolumn] != nullptr))return false;
+			return true;
+		}
+		else {
+			if (move_count != 0)return false;
+			if (newcolumn != column)return false;
+			if (board[line - 1][column] != nullptr)return false;
+			if (board[newline][newcolumn] != nullptr) return false;
+
+			return true;
+		}
+
+
+	}
+	return true;
 }
 bool bishop :: valid_move(int newline , int newcolumn , piece***board){
 	int i, j;
@@ -60,26 +91,26 @@ bool bishop :: valid_move(int newline , int newcolumn , piece***board){
 	if (((newline - line) != (newcolumn - column)) && ((newline - line) != (column - newcolumn)))return false;
 	if (newline > line) {
 		if (newcolumn > column) {
-			for (i = line + 1; i < newline; i++) {
-				for (j = column + 1; j < newcolumn; j++) { if (board[i][j] != nullptr)return false; }
+			for (i = line + 1, j = column + 1; i < newline; i++, j++) {
+				if (board[i][j] != nullptr)return false;
 			}
 		}
 		else {
-			for (i = line + 1; i < newline; i++) {
-				for (j = column - 1; j > newcolumn; j--) { if (board[i][j] != nullptr)return false; }
+			for (i = line + 1, j = column - 1; i < newline; i++, j--) {
+				if (board[i][j] != nullptr)return false;
 			}
 		}
 
 	}
 	else {
 		if (newcolumn > column) {
-			for (i = line - 1 ; i > newline; i--) {
-				for (j = column + 1; j < newcolumn; j++) { if (board[i][j] != nullptr)return false; }
+			for (i = line - 1, j = column + 1; i > newline; i--, j++) {
+				if (board[i][j] != nullptr)return false;
 			}
 		}
 		else {
-			for (i = line - 1; i > newline; i--) {
-				for (j = column - 1; j > newcolumn; j--) { if (board[i][j] != nullptr)return false; }
+			for (i = line - 1, j = column - 1; i > newline; i--, j--) {
+				if (board[i][j] != nullptr)return false;
 			}
 		}
 	}
@@ -123,26 +154,26 @@ bool queen :: valid_move(int newline , int newcolumn , piece***board){
 		if (((newline - line) != (newcolumn - column)) && ((newline - line) != (column - newcolumn)))return false;
 		if (newline > line) {
 			if (newcolumn > column) {
-				for (i = line + 1; i < newline; i++) {
-					for (j = column + 1; j < newcolumn; j++) { if (board[i][j] != nullptr)return false; }
+				for (i = line + 1 , j = column+1; i < newline; i++ ,j++) {
+					 if (board[i][j] != nullptr)return false; 
 				}
 			}
 			else {
-				for (i = line + 1; i < newline; i++) {
-					for (j = column - 1; j > newcolumn; j--) { if (board[i][j] != nullptr)return false; }
+				for (i = line + 1 , j = column - 1; i < newline; i++ , j--) {
+					if (board[i][j] != nullptr)return false; 
 				}
 			}
 
 		}
 		else {
 			if (newcolumn > column) {
-				for (i = line - 1; i > newline; i--) {
-					for (j = column + 1; j < newcolumn; j++) { if (board[i][j] != nullptr)return false; }
+				for (i = line - 1 , j = column + 1; i > newline; i-- , j++) {
+					if (board[i][j] != nullptr)return false; 
 				}
 			}
 			else {
-				for (i = line - 1; i > newline; i--) {
-					for (j = column - 1; j > newcolumn; j--) { if (board[i][j] != nullptr)return false; }
+				for (i = line - 1 , j = column - 1; i > newline; i-- ,j--) {
+					 if (board[i][j] != nullptr)return false;
 				}
 			}
 		}
@@ -193,8 +224,9 @@ bool knight :: valid_move(int newline , int newcolumn , piece***board){
 		    if ((newcolumn == column + 1) || (newcolumn == column - 1))return true;
 	    }
 		return false;
-}bool piece::check_validity(int newline, int newcolumn, piece*** board , piece**teams) {
-	piece* alt = board[newline][newcolumn];
+}bool piece::check_validity(int newline, int newcolumn, piece*** board , piece***teams) {
+	if (valid_move(newline, newcolumn, board) == 0)return false;
+	
 	if (board[newline][newcolumn] != nullptr)board[newline][newcolumn]->setstatus(dead);
 	int oldline = line;
 	int oldcolumn = column;
@@ -206,8 +238,8 @@ bool knight :: valid_move(int newline , int newcolumn , piece***board){
 	line = newline;
 	move_count++;
 	for (i = 0; i < 16; i++) {
-		if (teams[team][i].getstatus() == alive) {
-			if (teams[team][i].valid_move(teams[color][0].getline(), teams[color][0].getcolumn(), board) == 1) {
+		if (teams[team][i]->getstatus() == alive) {
+			if (teams[team][i]->valid_move(teams[color][0]->getline(), teams[color][0]->getcolumn(), board) == 1) {
 				board[oldline][oldcolumn] = board[line][column];
 				board[line][column] = nullptr;
 				column = oldcolumn;
@@ -226,42 +258,43 @@ bool knight :: valid_move(int newline , int newcolumn , piece***board){
 
 	return true;
 }
-bool in_check(king& kng , piece* team , piece*** board) { 
+bool in_check(piece* kng , piece** team , piece*** board) { 
+	
 	int i;
 	for (i = 0; i < 16; i++) {
-		if( (team[i].valid_move(kng.getline(), kng.getcolumn(), board) == true) && (team[i].getstatus()==alive))return true;
+		if( (team[i]->valid_move(kng->getline(), kng->getcolumn(), board) == true) && (team[i]->getstatus()==alive))return true;
 	}
 	return false;
 }
-void promote(piece* pwn, char prom) {
+void promote(piece*& pwn, char prom) {
 	
 		if (pwn->getprom() == 'p') {
 			switch (prom) {
 			case 'r':
-			{rook extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus() , pwn->getmove_count());
+			{rook extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count(),pwn->getindice(),'r');
 			delete pwn;
-			*pwn = rook(extra);
+			pwn = new rook(extra);
 			};
 			break;
 
 			case 'k':
-			{knight extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count());
+			{knight extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count(),pwn->getindice(),'k');
 			delete pwn;
-			*pwn = knight(extra);
+			pwn = new knight(extra);
 			};
 			break;
 
 			case 'q':
-			{queen extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count());
+			{queen extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count() ,pwn->getindice(),'q');
 			delete pwn;
-			*pwn = queen(extra);
+			pwn = new queen(extra);
 			};
 			break;
 
 			case 'b':
-			{bishop extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count());
+			{bishop extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count(),pwn->getindice(),'b');
 			delete pwn;
-			*pwn = bishop(extra);
+			pwn = new bishop(extra);
 			};
 			break;
 			}
@@ -291,16 +324,16 @@ void piece :: move(int newline, int newcolumn, piece*** board) {
 		}
 	}
 }
-bool in_check_mate(king& kng, piece** teams, piece*** board) {
-	int opteam = (kng.getcolor() + 1) % 2;
+bool in_check_mate(piece* kng, piece*** teams, piece*** board) {
+	//int opteam = (kng->getcolor() + 1) % 2;
 	int i, j, k;
-	if (in_check(kng, teams[opteam], board) == false)return false;
+	//if (in_check(kng, teams[opteam], board) == false)return false;
 	for (i = 0; i < 16; i++) {
-		if (teams[kng.getcolor()][i].getstatus() == dead)continue;
+		if (teams[kng->getcolor()][i]->getstatus() == dead)continue;
 		for (j = 0; j < 8; j++) {
 			for (k = 0; k < 8; k++) {
 				
-				if ((teams[kng.getcolor()][i].valid_move(j, k, board) == 1) && (teams[kng.getcolor()][i].check_validity(j, k, board, teams) == 1))
+				if ((teams[kng->getcolor()][i]->valid_move(j, k, board) == 1) && (teams[kng->getcolor()][i]->check_validity(j, k, board, teams) == 1))
 					return false;
 
 			}
@@ -309,21 +342,21 @@ bool in_check_mate(king& kng, piece** teams, piece*** board) {
 	}
 	return true;
 }
-bool in_stale_mate(king& kng, piece** teams, piece*** board) {
-	int opteam = (kng.getcolor() + 1) % 2;
+bool in_stale_mate(piece* kng, piece*** teams, piece*** board) {
+	//int opteam = (kng->getcolor() + 1) % 2;
 	int i, j, k;
-	if (in_check(kng, teams[opteam], board) == true)return false;
+	//if (in_check(kng, teams[opteam], board) == true)return false;
 	for (i = 0; i < 16; i++) {
-		if (teams[kng.getcolor()][i].getstatus() == dead)continue;
+		if (teams[kng->getcolor()][i]->getstatus() == dead)continue;
 		for (j = 0; j < 8; j++) {
 			for (k = 0; k < 8; k++) {
 
-				if ((teams[kng.getcolor()][i].valid_move(j, k, board) == 1) && (teams[kng.getcolor()][i].check_validity(j, k, board, teams) == 1))
+				if ((teams[kng->getcolor()][i]->valid_move(j, k, board) == 1) /* && (teams[kng->getcolor()][i]->check_validity(j, k, board, teams) == 1)*/)
 					return false;
 
 			}
 		}
-
+		
 	}
 	return true;
 }
