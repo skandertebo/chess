@@ -21,7 +21,7 @@ namespace piece {
 class piece {
 
 protected : 
-
+int number;
 bool status;
 int move_count;
 int line ;
@@ -34,9 +34,9 @@ char getprom() { return prom; }
 virtual bool valid_move(int newline, int newcolumn, piece*** board) = 0;
 // note that valid move only checks the piece's move validity without looking into exposing the king to a check 
 // for the piece to have an actual valid move it should pass the valid_move method and the check situation function
-piece(int color, int line, int column, bool status, int move_count , int indice , char prom) :color(color), status(status), line(line), column(column), move_count(move_count) , indice(indice) , prom(prom) {  }
+piece(int color, int line, int column, bool status, int move_count , int indice , char prom , int number) :color(color), status(status), line(line), column(column), move_count(move_count) , indice(indice) , prom(prom) , number(number) {  }
 ~piece(){}
-piece(piece& pce) : color(pce.getcolor()) , line(pce.getline()) , column(pce.getcolumn()) , status(pce.getstatus()) , prom(pce.getprom()) , move_count(pce.getmove_count()) ,indice(pce.getindice()) {}
+piece(piece& pce) : color(pce.getcolor()) , line(pce.getline()) , column(pce.getcolumn()) , status(pce.getstatus()) , prom(pce.getprom()) , move_count(pce.getmove_count()) ,indice(pce.getindice()) , number(pce.getnumber()) {}
 void move(int newline , int newcolumn , piece***&board);
 void kill(piece*** board);
 bool getstatus(){return status;}
@@ -45,6 +45,7 @@ int getline(){return line;}
 int getcolumn(){return column;}
 int getmove_count() { return move_count; }
 int getindice() { return indice; }
+int getnumber() { return number; }
 void setcolor(int color){this->color = color;}
 void setline(int line){this->line = line;}
 void setcolumn(int column){this->column = column;}
@@ -57,7 +58,7 @@ piece():color(-1),line(0),column(0),status(0),prom('a'),move_count(0) {}
 class pawn : public piece{
 public:
 bool valid_move(int newline , int newcolumn , piece*** board);
-pawn(int color, int line, int column, bool status , int move_count , int indice , char prom ) : piece(color, line, column, status, move_count , indice ,prom ) { prom = 'p'; };
+pawn(int color, int line, int column, bool status , int move_count , int indice , char prom , int number ) : piece(color, line, column, status, move_count , indice ,prom,number ) { prom = 'p'; };
 pawn(pawn& pwn) : piece(pwn){};
 
 };
@@ -65,7 +66,7 @@ pawn(pawn& pwn) : piece(pwn){};
 class rook : public piece{
 public:
 bool valid_move(int newline , int newcolumn , piece*** board);
-rook(int color, int line, int column, bool status, int move_count , int indice, int prom) : piece(color, line, column, status, move_count ,indice ,prom) { prom = 'r'; };
+rook(int color, int line, int column, bool status, int move_count , int indice, int prom , int number) : piece(color, line, column, status, move_count ,indice ,prom , number) { prom = 'r'; };
 
 rook(rook& rk) : piece(rk){};
 };
@@ -73,28 +74,28 @@ rook(rook& rk) : piece(rk){};
 class queen : public piece{
 public:
 bool valid_move(int newline , int newcolumn , piece*** board);
-queen(int color , int line , int column , bool status, int move_count, int indice, int prom) : piece(color , line , column , status, move_count, indice, prom){ prom = 'q'; };
+queen(int color , int line , int column , bool status, int move_count, int indice, int prom , int number) : piece(color , line , column , status, move_count, indice, prom , number){ prom = 'q'; };
 queen(queen& q) : piece(q) {};
 };
 
 class knight : public piece{
 public:
 bool valid_move(int newline , int newcolumn , piece*** board);
-knight(int color , int line , int column , bool status, int move_count, int indice, int prom) : piece(color , line , column , status, move_count, indice, prom){ prom = 'k'; };
+knight(int color , int line , int column , bool status, int move_count, int indice, int prom , int number) : piece(color , line , column , status, move_count, indice, prom , number){ prom = 'k'; };
 knight(knight& k) : piece(k) {};
 };
 
 class bishop : public piece{
 public:
 bool valid_move(int newline , int newcolumn , piece*** board);
-bishop(int color , int line , int column , bool status, int move_count, int indice, int prom) : piece(color , line , column , status, move_count, indice, prom){ prom = 'b'; };
+bishop(int color , int line , int column , bool status, int move_count, int indice, int prom , int number) : piece(color , line , column , status, move_count, indice, prom , number){ prom = 'b'; };
 bishop(rook& bi) : piece(bi) {};
 };
 
 class king : public piece{
 public:
 bool valid_move(int newline , int newcolumn , piece*** board);
-king(int color, int line, int column, bool status, int move_count, int indice, int prom) : piece(color, line, column, status, move_count, indice, prom) { prom = 'u'; };
+king(int color, int line, int column, bool status, int move_count, int indice, int prom , int number) : piece(color, line, column, status, move_count, indice, prom , number) { prom = 'u'; };
 
 };
 

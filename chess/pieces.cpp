@@ -271,28 +271,28 @@ void promote(piece*& pwn, char prom) {
 		if (pwn->getprom() == 'p') {
 			switch (prom) {
 			case 'r':
-			{rook extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count(),pwn->getindice(),'r');
+			{rook extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count(),pwn->getindice(),'r',pwn->getnumber());
 			delete pwn;
 			pwn = new rook(extra);
 			};
 			break;
 
 			case 'k':
-			{knight extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count(),pwn->getindice(),'k');
+			{knight extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count(),pwn->getindice(),'k' , pwn->getnumber());
 			delete pwn;
 			pwn = new knight(extra);
 			};
 			break;
 
 			case 'q':
-			{queen extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count() ,pwn->getindice(),'q');
+			{queen extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count() ,pwn->getindice(),'q', pwn->getnumber());
 			delete pwn;
 			pwn = new queen(extra);
 			};
 			break;
 
 			case 'b':
-			{bishop extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count(),pwn->getindice(),'b');
+			{bishop extra(pwn->getcolor(), pwn->getline(), pwn->getcolumn(), pwn->getstatus(), pwn->getmove_count(),pwn->getindice(),'b', pwn->getnumber());
 			delete pwn;
 			pwn = new bishop(extra);
 			};
