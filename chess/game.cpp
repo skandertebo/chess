@@ -15,7 +15,7 @@ namespace game {
 		for (i = 8; i < 16; i++) {
 			teams[white][i] = new piece::pawn(white, 1, i - 8, alive, 0, i, 'p' , 9);
 		}
-		teams[white][0] = new piece::king(white, 0, 4, alive, 0, 0, 'k' , 0);
+		teams[white][0] = new piece::king(white, 0, 4, alive, 0, 0, 'u' , 0);
 		teams[white][1] = new piece::queen(white, 0, 3, alive, 0, 1, 'q' , 0);
 		teams[white][2] = new piece::rook(white, 0, 0, alive, 0, 2, 'r' , 1);
 		teams[white][3] = new piece::rook(white, 0, 7, alive, 0, 3, 'r' ,2);
@@ -27,7 +27,7 @@ namespace game {
 		for (i = 8; i < 16; i++) {
 			teams[black][i] = new piece::pawn(black, 6, i - 8, alive, 0, i, 'p' , 9);
 		}
-		teams[black][0] = new piece::king(black, 7, 4, alive, 0, 0, 'k' , 0);
+		teams[black][0] = new piece::king(black, 7, 4, alive, 0, 0, 'u' , 0);
 		teams[black][1] = new piece::queen(black, 7, 3, alive, 0, 1, 'q' , 0);
 		teams[black][2] = new piece::rook(black, 7, 0, alive, 0, 2, 'r' ,1);
 		teams[black][3] = new piece::rook(black, 7, 7, alive, 0, 3, 'r' ,2);
@@ -85,21 +85,27 @@ namespace game {
 			newcolumn--;
 		} while ((board[line][column]->valid_move(newline, newcolumn, board) == 0) || ((board[line][column]->check_validity(newline, newcolumn, board, teams) == 0)));
 	}
+	void game :: switch_roles(){ role = (role + 1) % 2; }
+	void game::update_interface_board() {
+		int i, j;
+		for (i = 0; i < 8; i++) {
+			for (j = 0; j < 8; j++) {
+				(*(*(interface_board + i) + j))[0] = ((board[i][j] == nullptr) ? ' ' : ((board[i][j]->getcolor() == 0) ? 'w' : 'b'));
+				(*(*(interface_board + i) + j))[1] = ((board[i][j] == nullptr) ? ' ' : board[i][j]->getprom());
+				(*(*(interface_board + i) + j))[2] = ((board[i][j] == nullptr) ? ' ' : ((board[i][j]->getnumber() == 1) ? '1' : (board[i][j]->getnumber() == 0) ? '0' : (board[i][j]->getnumber() == 2) ? '2' : '3'));
+			}
+		}
+	}
 	void game :: game_begin() {
 		int i,j;
 		while ((piece::in_check_mate(teams[role][0], teams, board) == false) && (piece::in_stale_mate(teams[role][0], teams, board) == false)) {
 			read_input();
 			board[line][column]->move(newline, newcolumn, board);
-			role = (role + 1) % 2;
-			std::cout << ((role == 0) ? "white turn" : "black turn") << std::endl;
-			for (i = 0; i < 8; i++) {
-				for (j = 0; j < 8; j++) {
-					(*(*(interface_board + i) + j))[0] = ((board[i][j] == nullptr) ? ' ' : ((board[i][j]->getcolor() == 0) ? 'w' : 'b'));
-					(*(*(interface_board + i) + j))[1] = ((board[i][j] == nullptr) ? ' ' : board[i][j]->getprom());
-					(*(*(interface_board + i) + j))[2] = ((board[i][j] == nullptr) ? ' ' : ((board[i][j]->getnumber() == 1) ? '1' : (board[i][j]->getnumber() == 0) ? '0' : (board[i][j]->getnumber() == 2) ? '2' : '3'));
-				}
-			}
+			switch_roles();
+			update_interface_board();
 			show_interface();
+			if (piece::in_check(teams[role][0] , teams[(role+1)%2] , board) == 1)std::cout << ((role == 0) ? "white in check" : "black in check") << std::endl;
+			std::cout << ((role == 0) ? "white turn" : "black turn") << std::endl;
 		}
 	
 	/**

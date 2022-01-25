@@ -1,16 +1,6 @@
 #pragma once
 #include <iostream>
 #define COMMON_CHECK if ((newline > 7) || (newcolumn > 7)) return false; if ((board[newline][newcolumn] != nullptr) && (board[newline][newcolumn]->getcolor() == color))return false;
-// to implement letters in column index
-const int a = 0 ;
-const int b = 1 ;
-const int c = 2 ;
-const int d = 3 ;
-const int e = 4 ;
-const int f = 5 ;
-const int g = 6 ;
-const int h = 7;
-
 const int alive = 0 ;
 const int dead = 1 ;
 const int white = 0 ;
@@ -103,6 +93,5 @@ void promote(piece*& pwn , char prom );
 bool in_check(piece* kng , piece** team , piece *** board);
 bool in_check_mate(piece* kng , piece*** teams , piece *** board);
 bool in_stale_mate(piece* kng, piece*** teams, piece*** board);
-
 
 };

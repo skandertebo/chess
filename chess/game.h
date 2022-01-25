@@ -1,6 +1,7 @@
 #pragma once
 #include "pieces.h"
 #include <iostream>
+#define GAME_END ~game(); 
 namespace game {
 	class game {
 	private:
@@ -13,6 +14,7 @@ namespace game {
 		void switch_roles();
 		void game_begin();
 		void show_interface();
+		void update_interface_board();
 		game();
 		~game() { std::cout << "game has ended"; };
 };

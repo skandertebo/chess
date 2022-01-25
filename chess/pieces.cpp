@@ -311,8 +311,6 @@ void piece :: move(int newline, int newcolumn, piece***& board) {
 	}
 	board[newline][newcolumn] = board[line][column];
 	board[line][column] = nullptr;
-	line = newline;
-	column = newcolumn;
 	if (prom == 'u') {
 		if (newcolumn == column + 2) {
 			board[line][column + 1] = board[line][column + 3];
@@ -323,6 +321,9 @@ void piece :: move(int newline, int newcolumn, piece***& board) {
 			board[line][column -4] = nullptr;
 		}
 	}
+	line = newline;
+	column = newcolumn;
+	move_count++;
 }
 bool in_check_mate(piece* kng, piece*** teams, piece*** board) {
 	int opteam = (kng->getcolor() + 1) % 2;
