@@ -197,6 +197,7 @@ bool king :: valid_move(int newline , int newcolumn , piece***board){
 		if (board[line][column + 3]->getcolor() != color)return false;
 		if (board[line][column + 2]!=nullptr)return false;
 		if (board[line][column + 1]!=nullptr)return false;
+		castling = king_side;
 		return true;
 	}
 	else if (newcolumn == column - 2) {
@@ -225,8 +226,8 @@ bool knight :: valid_move(int newline , int newcolumn , piece***board){
 	    }
 		return false;
 }bool piece::check_validity(int newline, int newcolumn, piece***& board , piece***teams) {
-	if (valid_move(newline, newcolumn, board) == 0)return false;
 	
+	piece* oldpiece = board[newline][newcolumn];
 	if (board[newline][newcolumn] != nullptr)board[newline][newcolumn]->setstatus(dead);
 	int oldline = line;
 	int oldcolumn = column;
@@ -250,7 +251,7 @@ bool knight :: valid_move(int newline , int newcolumn , piece***board){
 	  }
 	}
 		board[oldline][oldcolumn] = board[line][column];
-		board[line][column] = nullptr;
+		board[line][column] = oldpiece;
 		column = oldcolumn;
 		line = oldline;
 		move_count--;

@@ -1,5 +1,6 @@
 #pragma once
 #include "pieces.h"
+#include "UI.h"
 #include <iostream>
 #define GAME_END ~game(); 
 namespace game {
@@ -8,13 +9,15 @@ namespace game {
 	int line, column, newline, newcolumn, role;
     piece::piece*** board ;
 	piece::piece*** teams;
-	char*** interface_board;
+	piece::piece* heldPiece;
+	bool active_game;
+
 	public:
-		void read_input();
+		//void read_input();
 		void switch_roles();
 		void game_begin();
-		void show_interface();
-		void update_interface_board();
+		//void show_interface();
+		//void update_interface_board();
 		game();
 		~game() { std::cout << "game has ended"; };
 };
