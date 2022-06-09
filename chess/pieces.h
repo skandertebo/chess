@@ -27,7 +27,7 @@ public :
 	piece(int color, int line, int column, bool status, int move_count , int indice , char prom , int number) :color(color), status(status), line(line), column(column), move_count(move_count) , indice(indice) , prom(prom) , number(number) {  }
 	~piece(){}
 	piece(piece& pce) : color(pce.getcolor()) , line(pce.getline()) , column(pce.getcolumn()) , status(pce.getstatus()) , prom(pce.getprom()) , move_count(pce.getmove_count()) ,indice(pce.getindice()) , number(pce.getnumber()) {}
-	void move(int newline , int newcolumn , piece***&board);
+	void move(int newline, int newcolumn, piece***& board);
 	void kill(piece*** board);
 	bool getstatus(){return status;}
 	int  getcolor(){return color;}

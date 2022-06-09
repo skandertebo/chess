@@ -53,7 +53,7 @@
 		gui::piece* teams[2][16];
 		int isHeld = 0;
 		gui::initiate_teams(teams);
-		sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
+		sf::RenderWindow window(sf::VideoMode(800, 800), "chesskan");
 		while (window.isOpen())
 		{
 

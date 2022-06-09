@@ -1,6 +1,7 @@
 #include "UI.h"
 #include <iostream>
 
+//displayed board
 gui :: board :: board() {
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
@@ -40,7 +41,7 @@ void gui::board::draw(sf::RenderWindow& window) {
 
 
 
-
+//displayed pieces
 gui::piece::piece(const std::string& type, const std::string& team, int col, int row, int indice) : indice(indice), row(row), col(col) {
     this->type = type;
     this->team = team;
@@ -60,7 +61,7 @@ gui::piece::piece(const std::string& type, const std::string& team, int col, int
     }
 }
 
-void gui::piece::draw(sf::RenderWindow& window) {
+void gui::piece::draw(sf::RenderWindow& window)const {
     if (status == alive)
         window.draw(shape);
 }

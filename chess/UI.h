@@ -26,7 +26,7 @@ namespace gui {
 	public:
 		int row, col;
 		piece(const std::string& type, const std::string& team, int col, int row, int indice);
-		void draw(sf::RenderWindow& window);
+		void draw(sf::RenderWindow& window) const;
 		void move(int col, int row);
 		void kill();
 		sf::Vector2f getPosition() const;
