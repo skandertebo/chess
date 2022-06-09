@@ -13,11 +13,9 @@ namespace game {
 	bool active_game;
 
 	public:
-		//void read_input();
+
 		void switch_roles();
 		void game_begin();
-		//void show_interface();
-		//void update_interface_board();
 		game();
 		~game() { std::cout << "game has ended"; };
 };
